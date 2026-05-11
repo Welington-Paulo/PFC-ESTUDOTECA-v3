@@ -1,0 +1,76 @@
+/* ============================================================
+   ESTUDOTECA DESIGN SYSTEM - V6.0 (PREMIUM SaaS)
+   ============================================================ */
+
+:root {
+    /* --- PALETA DE CORES (MODERNA & PROFISSIONAL) --- */
+    --primary: #ffb703;            /* Âmbar Principal */
+    --primary-glow: rgba(255, 183, 3, 0.3);
+    --secondary: #023047;          /* Azul Marinho Profundo */
+    --accent: #219ebc;             /* Azul Neon */
+    
+    /* --- ESCALA NEUTRA (HIGH CONTRAST) --- */
+    --bg-app: #fdfdfe;             /* Fundo ultra-limpo */
+    --bg-sidebar: #011627;         /* Azul quase preto para Sidebar */
+    --border-light: #eef2f6;       /* Bordas sutis */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    
+    /* --- TIPOGRAFIA (ESTRATÉGIA DE LEITURA) --- */
+    --text-main: #0f172a;          /* Slate 900 */
+    --text-muted: #64748b;         /* Slate 500 */
+    --text-on-dark: #f8fafc;
+    
+    /* --- STATUS SaaS (SINALIZAÇÃO CLARA) --- */
+    --color-success: #10b981;      /* Esmeralda */
+    --color-error: #f43f5e;        /* Rosa choque/Vermelho */
+    --color-warning: #f59e0b;      /* Amarelo */
+    --color-info: #3b82f6;         /* Azul */
+
+    /* --- ELEVAÇÃO & SOMBRAS (EFEITO 3D MODERNO) --- */
+    /* Sombras em camadas para parecer que os elementos flutuam */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.04), 0 8px 10px -6px rgba(0,0,0,0.04);
+    --shadow-premium: 0 20px 50px rgba(2, 48, 71, 0.1);
+
+    /* --- CURVAS (BORDAS SUAVES) --- */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* --- TRANSIÇÕES --- */
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* RESET GLOBAL REFINADO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* Scrollbar Estilo Apple (Fina e Discreta) */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

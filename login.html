@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudoTeca | Login Premium</title>
+    
+    <!-- Tipografia -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <div id="toast-container"></div>
+
+    <main class="auth-container">
+        
+        <!-- LADO VISUAL (BRANDING) -->
+        <section class="auth-visual">
+            <div class="visual-content">
+                <img src="assets/logo-branca.png" alt="EstudoTeca" class="auth-logo">
+                <h1>Transforme seu esforço em <span class="text-gradient">resultados.</span></h1>
+                <p>A plataforma definitiva para estudantes que buscam excelência e organização em alto nível.</p>
+                
+                <div class="auth-features">
+                    <div class="feat-item">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Cronograma Inteligente</span>
+                    </div>
+                    <div class="feat-item">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Análise de Desempenho</span>
+                    </div>
+                    <div class="feat-item">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Material Exclusivo Premium</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blobs Animados de Fundo -->
+            <div class="aura-blob blob-1"></div>
+            <div class="aura-blob blob-2"></div>
+        </section>
+
+        <!-- LADO DO FORMULÁRIO -->
+        <section class="auth-form-side">
+            <div class="form-box">
+                <header class="form-header">
+                    <h2 id="auth-title">Bem-vindo de volta</h2>
+                    <p id="auth-subtitle">Insira suas credenciais para acessar sua conta.</p>
+                </header>
+
+                <button class="btn-google">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
+                    Entrar com o Google
+                </button>
+
+                <div class="auth-divider">
+                    <span>ou use seu e-mail</span>
+                </div>
+
+                <form id="authForm" class="modern-form">
+                    <!-- Campo Nome (Apenas Cadastro) -->
+                    <div class="input-group hidden" id="nameGroup">
+                        <label>Nome Completo</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="regName" placeholder="Ex: Gabriel Silva">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>E-mail</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="authEmail" required placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="label-row">
+                            <label>Senha</label>
+                            <a href="#" class="link-sm" id="forgotLink">Esqueceu?</a>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="authPass" required placeholder="••••••••">
+                            <button type="button" class="toggle-pass" onclick="togglePasswordVisibility()">
+                                <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary-auth" id="btnAuth">
+                        <span id="btnText">Acessar Plataforma</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <footer class="form-footer">
+                    <p id="toggleMsg">Não tem uma conta? <a href="javascript:void(0)" onclick="toggleAuthMode()">Crie uma agora</a></p>
+                </footer>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/services.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

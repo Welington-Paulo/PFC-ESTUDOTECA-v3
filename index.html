@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstudoTeca | Dashboard Elite</title>
+    
+    <!-- Tipografia Premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6.5.1 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Folhas de Estilo -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <!-- Overlay de Carregamento (Efeito Smooth) -->
+    <div id="app-loader" class="loader-overlay hidden">
+        <div class="spinner-premium"></div>
+    </div>
+
+    <!-- Container Global de Notificações -->
+    <div id="toast-container"></div>
+
+    <!-- SIDEBAR PREMIUM (Fundo Escuro) -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/logo-branca.png" alt="EstudoTeca" class="logo-premium">
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <small class="group-title">Menu Principal</small>
+                <a href="javascript:void(0)" class="nav-link active" onclick="App.showTab('inicio')">
+                    <i class="fa-solid fa-house-chimney"></i>
+                    <span>Início</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('disciplinas')">
+                    <i class="fa-solid fa-book-bookmark"></i>
+                    <span>Disciplinas</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('cronograma')">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <span>Cronograma</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <small class="group-title">Ferramentas</small>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('simulados')">
+                    <i class="fa-solid fa-vial-circle-check"></i>
+                    <span>Simulados</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('materiais')">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Arquivos</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-card-minimal" onclick="App.toggleAccordion('userMenu')">
+                <div class="avatar-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=User&background=ffb703&color=011627" id="user-avatar" alt="Avatar">
+                    <div class="status-indicator"></div>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="sidebar-user-name">Carregando...</span>
+                    <span class="user-plan">Plano Premium</span>
+                </div>
+                <i class="fa-solid fa-chevron-up"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="main-layout">
+        
+        <!-- HEADER (Glassmorphism) -->
+        <header class="glass-header">
+            <div class="header-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar em meus estudos...">
+                <kbd>/</kbd>
+            </div>
+            
+            <div class="header-actions">
+                <div class="notif-badge" onclick="App.toggleNotifDropdown()">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="dot hidden" id="notif-dot"></span>
+                </div>
+                <div class="v-divider"></div>
+                <button class="btn-settings" onclick="App.openProfileModal()">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- VIEWPORT (Onde as abas aparecem) -->
+        <div class="content-viewport">
+            
+            <!-- ABA: INÍCIO -->
+            <section id="tab-inicio" class="tab-pane active">
+                <div class="welcome-banner">
+                    <div class="banner-text">
+                        <h1 id="welcome-msg">Bem-vindo, Estudante! 🚀</h1>
+                        <p>Você tem 4 atividades pendentes para hoje. Vamos focar?</p>
+                    </div>
+                    <div class="banner-stats">
+                        <div class="mini-stat">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Dias de Foco</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Cards de progresso rápido -->
+                    <div class="glass-card stat-card">
+                        <div class="icon-box blue"><i class="fa-solid fa-clock"></i></div>
+                        <div class="data-box">
+                            <h3>14.5h</h3>
+                            <p>Estudadas esta semana</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="icon-box green"><i class="fa-solid fa-check-double"></i></div>
+                        <div class="data-box">
+                            <h3>85%</h3>
+                            <p>Taxa de acertos</p>
+                        </div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <div class="icon-box amber"><i class="fa-solid fa-fire"></i></div>
+                        <div class="data-box">
+                            <h3>920</h3>
+                            <p>Pontos acumulados</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA: DISCIPLINAS -->
+            <section id="tab-disciplinas" class="tab-pane">
+                <header class="section-header">
+                    <h2>Seus Módulos</h2>
+                    <div class="header-filters">
+                        <button class="filter-pill active">Todos</button>
+                        <button class="filter-pill">Exatas</button>
+                        <button class="filter-pill">Humanas</button>
+                    </div>
+                </header>
+                <div class="disciplinas-grid" id="subjects-container">
+                    <!-- Gerado via JS -->
+                </div>
+            </section>
+
+            <!-- ABA: CRONOGRAMA -->
+            <section id="tab-cronograma" class="tab-pane">
+                <!-- Estrutura do calendário será colocada aqui -->
+            </section>
+
+        </div>
+    </main>
+
+    <!-- MODAIS -->
+    <div id="profileModal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <!-- Conteúdo do Modal de Perfil -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/services.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
