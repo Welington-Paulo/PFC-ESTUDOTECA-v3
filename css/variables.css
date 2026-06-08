@@ -1,50 +1,56 @@
 /* ============================================================
-   ESTUDOTECA DESIGN SYSTEM - V6.0 (PREMIUM SaaS)
+   css/variables.css - ESTUDOTECA ELITE DESIGN SYSTEM (v10.0)
    ============================================================ */
 
 :root {
-    /* --- PALETA DE CORES (MODERNA & PROFISSIONAL) --- */
+    /* --- PALETA DE CORES SaaS (2026 PREMIUM) --- */
     --primary: #ffb703;            /* Âmbar Principal */
+    --primary-hover: #fb8500;      /* Laranja de Destaque */
     --primary-glow: rgba(255, 183, 3, 0.3);
-    --secondary: #023047;          /* Azul Marinho Profundo */
-    --accent: #219ebc;             /* Azul Neon */
     
-    /* --- ESCALA NEUTRA (HIGH CONTRAST) --- */
-    --bg-app: #fdfdfe;             /* Fundo ultra-limpo */
+    --secondary: #023047;          /* Azul Marinho Profundo */
+    --secondary-light: #054a6d;    /* Azul para Gradientes */
+    --accent: #219ebc;             /* Azul Neon para Detalhes IA */
+    
+    /* --- FUNDO E CONTRASTE (ICE BLUE STYLE) --- */
+    --bg-app: #f0f4f8;             /* Fundo da Página (Ice Blue) */
     --bg-sidebar: #011627;         /* Azul quase preto para Sidebar */
-    --border-light: #eef2f6;       /* Bordas sutis */
-    --glass-bg: rgba(255, 255, 255, 0.75);
+    --bg-card: #ffffff;            /* Fundo dos Cards */
+    --border-light: #e2e8f0;       /* Bordas ultra-sutis */
+    --glass-bg: rgba(255, 255, 255, 0.85);
     
     /* --- TIPOGRAFIA (ESTRATÉGIA DE LEITURA) --- */
-    --text-main: #0f172a;          /* Slate 900 */
-    --text-muted: #64748b;         /* Slate 500 */
+    --text-main: #0f172a;          /* Slate 900 (Leitura Pesada) */
+    --text-muted: #64748b;         /* Slate 500 (Descrições) */
     --text-on-dark: #f8fafc;
     
     /* --- STATUS SaaS (SINALIZAÇÃO CLARA) --- */
-    --color-success: #10b981;      /* Esmeralda */
+    --color-success: #10b981;      /* Verde Esmeralda */
     --color-error: #f43f5e;        /* Rosa choque/Vermelho */
-    --color-warning: #f59e0b;      /* Amarelo */
-    --color-info: #3b82f6;         /* Azul */
+    --color-warning: #f59e0b;      /* Amarelo Ouro */
+    --color-info: #3b82f6;         /* Azul Royal */
 
-    /* --- ELEVAÇÃO & SOMBRAS (EFEITO 3D MODERNO) --- */
-    /* Sombras em camadas para parecer que os elementos flutuam */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.04), 0 8px 10px -6px rgba(0,0,0,0.04);
-    --shadow-premium: 0 20px 50px rgba(2, 48, 71, 0.1);
+    /* --- ELEVAÇÃO & SOMBRAS (EFEITO SaaS) --- */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-saas: 0 10px 25px -5px rgba(2, 48, 71, 0.1);
+    --shadow-premium: 0 20px 50px rgba(2, 48, 71, 0.15);
 
     /* --- CURVAS (BORDAS SUAVES) --- */
     --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 18px;
-    --radius-xl: 24px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
     --radius-full: 9999px;
 
     /* --- TRANSIÇÕES --- */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* --- FONTES --- */
+    --font-main: 'Inter', sans-serif;
+    --font-head: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* RESET GLOBAL REFINADO */
+/* --- RESET GLOBAL REFINADO --- */
 * {
     margin: 0;
     padding: 0;
@@ -54,10 +60,16 @@
 }
 
 body {
-    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-family: var(--font-main);
     background-color: var(--bg-app);
     color: var(--text-main);
     line-height: 1.5;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-head);
+    font-weight: 700;
 }
 
 /* Scrollbar Estilo Apple (Fina e Discreta) */
@@ -73,4 +85,9 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
+}
+
+/* Utilitário para Esconder Elementos */
+.hidden {
+    display: none !important;
 }

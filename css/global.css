@@ -1,16 +1,15 @@
 /* ============================================================
-   ESTUDOTECA GLOBAL LAYOUT - V6.0
+   css/global.css - Estrutura de Layout SaaS Elite
    ============================================================ */
 
-/* 1. CONFIGURAÇÃO DE TELA CHEIA */
+/* --- 1. ESTRUTURA DE TELA --- */
 body {
     display: flex;
     min-height: 100vh;
     background-color: var(--bg-app);
-    overflow-x: hidden;
 }
 
-/* 2. SIDEBAR FIXA (ESTILO PREMIUM DARK) */
+/* --- 2. SIDEBAR ELITE (FIXA À ESQUERDA) --- */
 .sidebar {
     width: 280px;
     height: 100vh;
@@ -20,53 +19,50 @@ body {
     top: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 35px 20px;
     z-index: 1000;
-    padding: 32px 20px;
-    transition: var(--transition);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.sidebar-header {
-    padding-bottom: 40px;
-    padding-left: 10px;
+.logo-container {
+    padding: 0 15px 35px;
+    text-align: center;
 }
 
-.logo-premium {
-    width: 150px;
-    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+.site-logo {
+    width: 155px;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 
-/* Navegação da Sidebar */
-.sidebar-nav {
-    flex: 1;
+/* Navegação Sidebar */
+.nav-menu {
+    flex-grow: 1;
 }
 
-.nav-group {
-    margin-bottom: 30px;
-}
-
-.group-title {
-    color: var(--text-muted);
+.nav-label {
+    color: rgba(255, 255, 255, 0.25);
     font-size: 0.7rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding-left: 15px;
-    margin-bottom: 12px;
+    letter-spacing: 1.8px;
+    margin: 25px 0 12px 15px;
     display: block;
-    opacity: 0.6;
+    text-transform: uppercase;
 }
 
 .nav-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 12px 18px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: var(--radius-md);
+    gap: 15px;
+    margin-bottom: 6px;
     transition: var(--transition);
-    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
 }
 
 .nav-link i {
@@ -76,204 +72,96 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--text-on-dark);
     background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+    transform: translateX(5px);
 }
 
 .nav-link.active {
-    color: var(--secondary);
     background: var(--primary);
-    box-shadow: 0 8px 20px var(--primary-glow);
+    color: var(--secondary);
+    font-weight: 800;
+    box-shadow: 0 8px 25px var(--primary-glow);
 }
 
-/* Rodapé da Sidebar (User Card) */
-.sidebar-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+/* Rodapé da Sidebar */
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.user-card-minimal {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.user-card-minimal:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.avatar-wrapper {
-    position: relative;
-}
-
-#user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-}
-
-.status-indicator {
-    width: 12px;
-    height: 12px;
-    background: var(--color-success);
-    border: 2px solid var(--bg-sidebar);
-    border-radius: 50%;
-    position: absolute;
-    bottom: -2px;
-    right: -2px;
-}
-
-.user-info {
-    flex: 1;
+/* --- 3. ÁREA DE CONTEÚDO (MAIN LAYOUT) --- */
+.app-container {
+    margin-left: 280px; /* Alinhado com a largura da sidebar */
+    width: calc(100% - 280px);
     display: flex;
     flex-direction: column;
-}
-
-.user-name {
-    color: var(--text-on-dark);
-    font-size: 0.9rem;
-    font-weight: 700;
-}
-
-.user-plan {
-    color: var(--text-muted);
-    font-size: 0.75rem;
-}
-
-.sidebar-footer i {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-
-/* 3. LAYOUT PRINCIPAL (À DIREITA DA SIDEBAR) */
-.main-layout {
-    flex: 1;
-    margin-left: 280px; /* Largura da Sidebar */
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
     min-width: 0;
 }
 
-/* HEADER GLASSMORPISM */
-.glass-header {
+/* HEADER GLASSMORPHISM */
+.main-header {
     height: 80px;
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 45px;
     position: sticky;
     top: 0;
     z-index: 900;
 }
 
-.header-search {
-    background: #f1f5f9;
-    padding: 10px 16px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    max-width: 400px;
-    border: 1px solid transparent;
-    transition: var(--transition);
+.header-left {
+    flex: 1;
 }
 
-.header-search:focus-within {
-    background: white;
-    border-color: var(--primary);
-    box-shadow: var(--shadow-md);
-}
-
-.header-search input {
-    border: none;
-    background: transparent;
-    font-family: inherit;
-    font-size: 0.9rem;
-    width: 100%;
-    outline: none;
-}
-
-.header-search kbd {
-    background: white;
-    border: 1px solid #cbd5e1;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.notif-badge {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    cursor: pointer;
-    position: relative;
-}
-
-.v-divider {
-    width: 1px;
-    height: 24px;
-    background: var(--border-light);
-}
-
-.btn-settings {
-    font-size: 1.2rem;
-    color: var(--text-muted);
-    cursor: pointer;
-}
-
-/* VIEWPORT E TABS */
-.content-viewport {
+/* Viewport onde as abas aparecem */
+.main-content {
     padding: 40px;
     flex: 1;
 }
 
-.tab-pane {
-    display: none;
-    animation: tabFadeIn 0.4s ease;
+/* SISTEMA DE ABAS (TABS) */
+.tab-content {
+    display: none; 
+    animation: tabFadeIn 0.5s ease-out forwards;
 }
 
-.tab-pane.active {
+.tab-content.active {
     display: block;
 }
 
 @keyframes tabFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* RESPONSIVIDADE BÁSICA */
+/* --- 4. COMPONENTES GLOBAIS --- */
+#toast-container {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* --- 5. RESPONSIVIDADE --- */
 @media (max-width: 1024px) {
-    .sidebar {
-        width: 80px;
-        padding: 30px 10px;
-    }
-    .sidebar .user-info, 
-    .sidebar .group-title, 
-    .sidebar span, 
-    .sidebar i.fa-chevron-up,
-    .logo-premium {
+    .sidebar { width: 95px; padding: 30px 15px; }
+    .nav-label, .nav-link span, .u-info, .sidebar-bottom span, .site-logo, .u-greeting {
         display: none;
     }
-    .main-layout {
-        margin-left: 80px;
-    }
-    .nav-link {
-        justify-content: center;
-        padding: 15px 0;
-    }
+    .app-container { margin-left: 95px; width: calc(100% - 95px); }
+    .nav-link { justify-content: center; padding: 15px; }
+    .nav-link i { font-size: 1.4rem; }
 }

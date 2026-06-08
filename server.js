@@ -1,5 +1,5 @@
 /* ============================================================
-   ESTUDOTECA SaaS - SERVIDOR CENTRAL (v3.3)
+   ESTUDOTECA SaaS ELITE - SERVIDOR CENTRAL (v10.0 AI)
    ============================================================ */
 
 const express = require('express');
@@ -8,182 +8,113 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 require('dotenv').config();
 
 const app = express();
 
-// --- 1. CONFIGURAÇÕES INICIAIS (Middlewares) ---
+// --- 1. CONFIGURAÇÕES ---
 app.use(express.json());
 app.use(cors());
+app.use(express.static(__dirname));
 
-// --- 2. CONEXÃO COM O BANCO DE DADOS (MongoDB Atlas) ---
-const MONGO_URI = process.env.MONGO_URI || "SUA_URL_AQUI";
+// --- 2. CONFIGURAÇÃO DA IA (GEMINI 2.0/3 READY) ---
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Usando o modelo mais estável para análise textual profunda
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" }); 
 
-mongoose.connect(MONGO_URI)
-    .then(() => console.log("✅ SaaS Database: Conectado com sucesso!"))
-    .catch(err => console.error("❌ Erro fatal de conexão MongoDB:", err));
+// --- 3. CONEXÃO MONGODB ---
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ SaaS Elite Database: Conectado (Contexto 2026 Ativo)"))
+    .catch(err => console.error("❌ Erro MongoDB:", err));
 
-// --- 3. MODELOS DE DADOS (Schemas) ---
+// --- 4. MODELOS ---
+const User = mongoose.model('User', new mongoose.Schema({
+    name: String, email: { type: String, unique: true }, password: String
+}));
 
-// Modelo de Usuário
-const UserSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    email: { type: String, unique: true, required: true },
-    password: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
-});
+const Event = mongoose.model('Event', new mongoose.Schema({
+    userId: mongoose.Schema.Types.ObjectId, title: String, date: String
+}));
 
-// Modelo de Agenda (Eventos)
-const EventSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    title: { type: String, required: true },
-    date: { type: String, required: true }, // Formato: YYYY-MM-DD
-    createdAt: { type: Date, default: Date.now }
-});
-
-const User = mongoose.model('User', UserSchema);
-const Event = mongoose.model('Event', EventSchema);
-
-// --- 4. MIDDLEWARE DE SEGURANÇA (JWT Guard) ---
-const authenticateToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
+// --- 5. MIDDLEWARE JWT ---
+const auth = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1];
     if (!token) return res.status(401).json({ error: "Acesso negado." });
-
-    jwt.verify(token, process.env.JWT_SECRET || 'secret_saas_key', (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.status(403).json({ error: "Sessão expirada." });
         req.user = user;
         next();
     });
 };
 
-// --- 5. ROTAS DE API (Devem vir ANTES das rotas de arquivo) ---
+// --- 6. ROTAS DE INTELIGÊNCIA ARTIFICIAL (O Diferencial v10.0) ---
 
-// [AGENDA] Buscar Eventos do Usuário (GET)
-app.get('/api/events', authenticateToken, async (req, res) => {
+// ROTA: Chat de Dúvidas
+app.post('/api/ai/chat', auth, async (req, res) => {
     try {
-        const events = await Event.find({ userId: req.user.id }).sort({ date: 1 });
-        res.json(events);
+        const { prompt } = req.body;
+        const systemPrompt = `Você é o Tutor Elite da EstudoTeca. Estamos em 2026. 
+        Você tem acesso aos históricos do ENEM 2023, 2024 e 2025. 
+        Responda de forma didática, use bullet points e seja motivador. 
+        Dúvida do aluno: ${prompt}`;
+        
+        const result = await model.generateContent(systemPrompt);
+        res.json({ response: result.response.text() });
     } catch (err) {
-        res.status(500).json({ error: "Erro ao buscar agenda." });
+        res.status(500).json({ error: "Falha na IA." });
     }
 });
 
-// [AGENDA] Criar Novo Evento (POST)
-app.post('/api/events', authenticateToken, async (req, res) => {
+// ROTA: Analisador de Redação (A lógica que você pediu)
+app.post('/api/ai/analyze-essay', auth, async (req, res) => {
     try {
-        const { title, date } = req.body;
-        const newEvent = new Event({
-            userId: req.user.id,
-            title,
-            date
-        });
-        await newEvent.save();
-        res.status(201).json(newEvent);
+        const { essayText } = req.body;
+        const analysisPrompt = `Aja como um corretor rigoroso do ENEM 2026. 
+        Analise a seguinte redação e retorne um JSON com:
+        1. Nota Final (0-1000).
+        2. Notas por Competência (1 a 5).
+        3. Lista de Erros Ortográficos e Gramaticais encontrados.
+        4. Sugestões de melhoria para repertório sociocultural.
+        5. Texto corrigido (exemplo de como ficaria melhor).
+        
+        Texto da Redação: "${essayText}"`;
+
+        const result = await model.generateContent(analysisPrompt);
+        res.json({ analysis: result.response.text() });
     } catch (err) {
-        res.status(500).json({ error: "Erro ao salvar na agenda." });
+        res.status(500).json({ error: "Erro na análise da redação." });
     }
 });
 
-// [AGENDA] Deletar Evento (DELETE) - NOVA ROTA
-app.delete('/api/events/:id', authenticateToken, async (req, res) => {
-    try {
-        // Verifica se o evento pertence ao usuário antes de deletar
-        const event = await Event.findOneAndDelete({ 
-            _id: req.params.id, 
-            userId: req.user.id 
-        });
-
-        if (!event) return res.status(404).json({ error: "Evento não encontrado." });
-
-        res.json({ message: "Compromisso removido com sucesso." });
-    } catch (err) {
-        res.status(500).json({ error: "Erro ao excluir compromisso." });
-    }
-});
-
-// [AUTH] Cadastro
+// --- 7. ROTAS DE AUTENTICAÇÃO ---
 app.post('/api/auth/register', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
-        const userExists = await User.findOne({ email });
-        if (userExists) return res.status(400).json({ error: "E-mail já cadastrado." });
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const newUser = new User({ name, email, password: hashedPassword });
-        await newUser.save();
-        res.status(201).json({ message: "Usuário SaaS criado!" });
-    } catch (err) {
-        res.status(500).json({ error: "Erro no registro." });
-    }
+    const hash = await bcrypt.hash(req.body.password, 10);
+    const user = new User({ name: req.body.name, email: req.body.email, password: hash });
+    await user.save();
+    res.status(201).json({ message: "Registrado!" });
 });
 
-// [AUTH] Login
 app.post('/api/auth/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ error: "Usuário não encontrado." });
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ error: "Senha incorreta." });
-
-        const token = jwt.sign(
-            { id: user._id, name: user.name }, 
-            process.env.JWT_SECRET || 'secret_saas_key', 
-            { expiresIn: '24h' }
-        );
-
-        res.json({
-            token,
-            user: { id: user._id, name: user.name, email: user.email }
-        });
-    } catch (err) {
-        res.status(500).json({ error: "Erro no login." });
+    const user = await User.findOne({ email: req.body.email });
+    if (user && await bcrypt.compare(req.body.password, user.password)) {
+        const token = jwt.sign({ id: user._id, name: user.name }, process.env.JWT_SECRET);
+        return res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
     }
+    res.status(400).json({ error: "Dados incorretos." });
 });
 
-// [USER] Atualizar Perfil
-app.put('/api/user/:id', authenticateToken, async (req, res) => {
-    try {
-        const { name } = req.body;
-        if (req.user.id !== req.params.id) return res.status(403).json({ error: "Não autorizado." });
-
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, { name }, { new: true }).select('-password');
-        res.json(updatedUser);
-    } catch (err) {
-        res.status(500).json({ error: "Erro ao atualizar." });
-    }
+// --- 8. ROTAS DE AGENDA ---
+app.get('/api/events', auth, async (req, res) => res.json(await Event.find({ userId: req.user.id })));
+app.post('/api/events', auth, async (req, res) => {
+    const ev = new Event({ userId: req.user.id, title: req.body.title, date: req.body.date });
+    await ev.save(); res.status(201).json(ev);
+});
+app.delete('/api/events/:id', auth, async (req, res) => {
+    await Event.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+    res.json({ message: "Removido!" });
 });
 
-// [USER] Deletar Conta
-app.delete('/api/user/:id', authenticateToken, async (req, res) => {
-    try {
-        if (req.user.id !== req.params.id) return res.status(403).json({ error: "Não autorizado." });
-
-        // Deleta o usuário e também todos os eventos dele (Limpeza SaaS)
-        await Event.deleteMany({ userId: req.params.id });
-        await User.findByIdAndDelete(req.params.id);
-
-        res.json({ message: "Conta e dados excluídos." });
-    } catch (err) {
-        res.status(500).json({ error: "Erro ao excluir conta." });
-    }
-});
-
-// --- 6. CONFIGURAÇÃO DE ARQUIVOS ESTÁTICOS ---
-app.use(express.static(__dirname));
-
-// Rota principal (Abre o login ao acessar o domínio principal)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'login.html'));
-});
-
-// --- 7. INICIALIZAÇÃO ---
+// --- INICIALIZAÇÃO ---
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 EstudoTeca SaaS v3.3 rodando em: http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Elite Server v10 rodando na porta ${PORT}`));

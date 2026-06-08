@@ -1,206 +1,187 @@
 /* ============================================================
-   ESTUDOTECA COMPONENTS - V6.0
+   css/components.css - Biblioteca de Componentes SaaS Elite
    ============================================================ */
 
-/* 1. WELCOME BANNER (HERO) */
-.welcome-banner {
-    background: linear-gradient(135deg, var(--secondary) 0%, #064e72 100%);
-    background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png'), 
-                      linear-gradient(135deg, var(--secondary) 0%, #064e72 100%);
-    border-radius: var(--radius-lg);
-    padding: 40px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
+/* --- 1. SISTEMA DE BOTÕES ELITE --- */
+.btn {
+    display: inline-flex;
     align-items: center;
-    margin-bottom: 40px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-premium);
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-family: var(--font-head);
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    font-size: 0.95rem;
+    outline: none;
+    text-decoration: none;
 }
 
-.welcome-banner::after {
-    content: '';
-    position: absolute;
-    top: -50%; right: -10%;
-    width: 300px; height: 300px;
-    background: var(--primary);
-    filter: blur(100px);
-    opacity: 0.15;
+.btn-primary { 
+    background-color: var(--primary); 
+    color: var(--secondary); 
+    box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+}
+.btn-primary:hover { 
+    background-color: var(--primary-hover); 
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(251, 133, 0, 0.4);
 }
 
-.banner-text h1 {
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-    letter-spacing: -1px;
-}
-
-.banner-text p {
-    opacity: 0.8;
-    font-size: 1.1rem;
-}
-
-.mini-stat {
+.btn-glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    padding: 20px 30px;
-    border-radius: var(--radius-md);
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
+.btn-glass:hover { background: rgba(255, 255, 255, 0.2); }
 
-.stat-value {
-    display: block;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary);
+.btn-secondary { 
+    background-color: #f1f5f9; 
+    color: var(--secondary); 
+    border: 1px solid var(--border-light);
 }
+.btn-secondary:hover { background-color: var(--white); border-color: var(--primary); }
 
-.stat-label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
+.btn-icon-premium {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    border-radius: 12px;
+    transition: 0.3s;
+    display: flex;
 }
+.btn-icon-premium:hover { background: #f1f5f9; color: var(--secondary); }
 
-/* 2. GLASS CARDS (CARDS DE ESTATÍSTICAS) */
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
+/* --- 2. CARDS E SUPERFÍCIES --- */
+.card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-saas);
+    transition: var(--transition);
 }
 
 .glass-card {
-    background: white;
-    padding: 24px;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-light);
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    transition: var(--transition);
-}
-
-.glass-card:hover {
-    transform: translateY(-5px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: var(--shadow-premium);
-    border-color: var(--primary-glow);
 }
 
-.icon-box {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
+/* --- 3. MENUS SANFONA (ACCORDIONS) --- */
+.profile-accordion {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: 0.3s;
 }
 
-.icon-box.blue { background: #e0f2fe; color: #0ea5e9; }
-.icon-box.green { background: #dcfce7; color: #22c55e; }
-.icon-box.amber { background: #fef3c7; color: #f59e0b; }
-
-.data-box h3 {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--text-main);
-    line-height: 1;
-}
-
-.data-box p {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    margin-top: 4px;
-}
-
-/* 3. FILTROS (PILLS) */
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    margin-top: 40px;
-}
-
-.header-filters {
-    display: flex;
-    gap: 8px;
-    background: #f1f5f9;
-    padding: 5px;
-    border-radius: var(--radius-full);
-}
-
-.filter-pill {
-    padding: 8px 20px;
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    transition: var(--transition);
-}
-
-.filter-pill.active {
-    background: white;
-    color: var(--secondary);
-    box-shadow: var(--shadow-sm);
-}
-
-/* 4. MODAL SISTEMA (CENTRALIZADO) */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    padding: 20px;
-}
-
-.modal-card {
-    background: white;
-    width: 100%;
-    max-width: 500px;
-    padding: 40px;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-premium);
-    position: relative;
-    animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes modalPop {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* 5. TOAST NOTIFICATIONS */
-.toast {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: var(--secondary);
-    color: white;
-    padding: 16px 24px;
-    border-radius: var(--radius-md);
+.accordion-header {
+    padding: 12px 15px;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: var(--shadow-premium);
-    z-index: 3000;
-    animation: toastIn 0.5s ease forwards;
+    cursor: pointer;
 }
 
-@keyframes toastIn {
-    from { transform: translateX(100px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+.avatar-wrapper { position: relative; }
+.user-avatar { width: 44px; height: 44px; border-radius: 14px; border: 2px solid var(--primary); object-fit: cover; }
+.status-dot { width: 12px; height: 12px; background: var(--color-success); border: 2px solid var(--bg-sidebar); border-radius: 50%; position: absolute; bottom: -2px; right: -2px; }
+
+.u-info { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.u-name { color: var(--text-on-dark); font-weight: 700; font-size: 0.9rem; white-space: nowrap; text-overflow: ellipsis; }
+.u-plan { color: var(--primary); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    background: rgba(0, 0, 0, 0.2);
 }
 
-/* 6. UTILS */
-.hidden { display: none !important; }
+.profile-accordion.active .accordion-body { max-height: 250px; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.profile-accordion.active .arrow-icon { transform: rotate(180deg); }
+
+.accordion-inner a {
+    display: flex; align-items: center; gap: 12px; padding: 14px 20px;
+    color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: 0.2s;
+}
+.accordion-inner a:hover { color: var(--white); background: rgba(255, 255, 255, 0.05); }
+
+/* Versão Dropdown para o Header */
+.header-version .accordion-body {
+    position: absolute; top: 75px; right: 0; width: 220px;
+    background: white; box-shadow: var(--shadow-xl); border-radius: 20px; border: 1px solid var(--border-light); z-index: 2000;
+}
+.dropdown-content a {
+    padding: 15px 20px; display: flex; align-items: center; gap: 12px;
+    color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+}
+.dropdown-content a:hover { background: #f8faff; color: var(--accent); }
+
+/* --- 4. PROGRESSO E STATUS --- */
+.card-progress-box { margin: 15px 0; }
+.card-progress-container { background: #f1f5f9; height: 10px; border-radius: 20px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--sky-blue)); border-radius: 20px; transition: width 1s ease; }
+.progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); margin-bottom: 8px; }
+
+/* --- 5. NOTIFICAÇÕES (DROPDOWN & DOT) --- */
+.notif-wrapper { position: relative; }
+.notif-dot { position: absolute; top: 10px; right: 10px; width: 10px; height: 10px; background: var(--color-error); border: 2px solid white; border-radius: 50%; }
+
+.notif-dropdown {
+    position: absolute; top: 65px; right: 0; width: 340px; background: white; border-radius: 22px; padding: 20px;
+    box-shadow: var(--shadow-xl); border: 1px solid var(--border-light); display: none; z-index: 1200;
+}
+.notif-dropdown.active { display: block; animation: tabFadeIn 0.3s ease; }
+
+.notif-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 10px;}
+.notif-header h4 { font-size: 1.1rem; color: var(--secondary); }
+
+.notif-item { padding: 15px; border-radius: 14px; background: #f8fafc; border-left: 4px solid var(--primary); margin-bottom: 10px; display: flex; gap: 12px; }
+.notif-text p { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0; }
+
+/* --- 6. SISTEMA DE TOASTS --- */
+.toast {
+    background: white; padding: 18px 25px; border-radius: 18px; box-shadow: var(--shadow-premium);
+    border-left: 6px solid var(--primary); display: flex; align-items: center; gap: 15px;
+    font-weight: 700; color: var(--text-main); animation: toastIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+@keyframes toastIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+
+/* --- 7. MODAIS ELITE --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(1, 22, 39, 0.5); backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center; z-index: 5000; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+
+.modal-card {
+    background: white; width: 100%; max-width: 500px; padding: 45px; border-radius: 28px;
+    box-shadow: var(--shadow-premium); position: relative; animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes modalPop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.modal-header-elite { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.close-modal { font-size: 1.5rem; color: var(--text-muted); cursor: pointer; transition: 0.3s; }
+.close-modal:hover { color: var(--color-error); transform: rotate(90deg); }
+
+/* --- 8. INPUTS SaaS --- */
+.form-group { margin-bottom: 25px; }
+.form-group label { display: block; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.input-field-elite {
+    width: 100%; padding: 16px 20px; border-radius: 16px; border: 2px solid #f1f5f9; background: #f8fafc;
+    font-family: inherit; font-size: 1rem; transition: 0.3s; outline: none;
+}
+.input-field-elite:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 5px var(--primary-glow); }

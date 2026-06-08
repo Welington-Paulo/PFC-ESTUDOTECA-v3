@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EstudoTeca | Dashboard Elite</title>
+    <title>EstudoTeca | Elite SaaS Dashboard 2026</title>
     
-    <!-- Tipografia Premium -->
+    <!-- Tipografia Elite (Plus Jakarta Sans para Títulos) -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     
     <!-- FontAwesome 6.5.1 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Folhas de Estilo -->
+    <!-- CSS Modularizado (v10.0) -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/components.css">
@@ -19,163 +19,317 @@
 </head>
 <body>
 
-    <!-- Overlay de Carregamento (Efeito Smooth) -->
+    <!-- Overlay de Carregamento Premium -->
     <div id="app-loader" class="loader-overlay hidden">
         <div class="spinner-premium"></div>
     </div>
 
-    <!-- Container Global de Notificações -->
+    <!-- Sistema Global de Toasts -->
     <div id="toast-container"></div>
 
-    <!-- SIDEBAR PREMIUM (Fundo Escuro) -->
+    <!-- SIDEBAR SaaS ELITE -->
     <aside class="sidebar">
-        <div class="sidebar-header">
-            <img src="assets/logo-branca.png" alt="EstudoTeca" class="logo-premium">
-        </div>
-        
-        <nav class="sidebar-nav">
-            <div class="nav-group">
-                <small class="group-title">Menu Principal</small>
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <img src="assets/logo-branca.png" alt="EstudoTeca" class="site-logo">
+            </div>
+            
+            <nav class="nav-menu">
+                <small class="nav-label">Plataforma 2026</small>
                 <a href="javascript:void(0)" class="nav-link active" onclick="App.showTab('inicio')">
-                    <i class="fa-solid fa-house-chimney"></i>
-                    <span>Início</span>
+                    <i class="fa-solid fa-house-chimney"></i> <span>Dashboard</span>
                 </a>
                 <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('disciplinas')">
-                    <i class="fa-solid fa-book-bookmark"></i>
-                    <span>Disciplinas</span>
+                    <i class="fa-solid fa-book-bookmark"></i> <span>Disciplinas</span>
                 </a>
-                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('cronograma')">
-                    <i class="fa-solid fa-calendar-day"></i>
-                    <span>Cronograma</span>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('vestibular')">
+                    <i class="fa-solid fa-graduation-cap"></i> <span>Vestibular</span>
                 </a>
-            </div>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('agenda')">
+                    <i class="fa-solid fa-calendar-days"></i> <span>Cronograma</span>
+                </a>
+                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('atividades')">
+                    <i class="fa-solid fa-list-check"></i> <span>Atividades</span>
+                </a>
+            </nav>
+        </div>
 
-            <div class="nav-group">
-                <small class="group-title">Ferramentas</small>
-                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('simulados')">
-                    <i class="fa-solid fa-vial-circle-check"></i>
-                    <span>Simulados</span>
-                </a>
-                <a href="javascript:void(0)" class="nav-link" onclick="App.showTab('materiais')">
-                    <i class="fa-solid fa-folder-open"></i>
-                    <span>Arquivos</span>
-                </a>
-            </div>
-        </nav>
+        <div class="sidebar-bottom">
+            <!-- BOTÃO ASSISTENTE IA -->
+            <button class="nav-link btn-ai-sidebar" onclick="App.openAiChat()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> <span>Assistente IA</span>
+            </button>
 
-        <div class="sidebar-footer">
-            <div class="user-card-minimal" onclick="App.toggleAccordion('userMenu')">
-                <div class="avatar-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=User&background=ffb703&color=011627" id="user-avatar" alt="Avatar">
-                    <div class="status-indicator"></div>
+            <!-- Perfil Sidebar (Menu Sanfona) -->
+            <div class="profile-accordion" id="sidebarProfileAccordion">
+                <div class="accordion-header" onclick="App.toggleAccordion('sidebarProfileAccordion')">
+                    <div class="avatar-wrapper">
+                        <img src="" alt="Avatar" class="user-avatar" id="sidebar-avatar-img">
+                        <div class="status-dot"></div>
+                    </div>
+                    <div class="u-info">
+                        <span class="u-name" id="sidebar-user-name">Carregando...</span>
+                        <span class="u-plan">Elite Member</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-up arrow-icon"></i>
                 </div>
-                <div class="user-info">
-                    <span class="user-name" id="sidebar-user-name">Carregando...</span>
-                    <span class="user-plan">Plano Premium</span>
+                <div class="accordion-body">
+                    <div class="accordion-inner">
+                        <a href="javascript:void(0)" onclick="App.openProfileModal()"><i class="fa-solid fa-user-gear"></i> Perfil</a>
+                        <a href="javascript:void(0)" onclick="apiService.logout()" class="logout-link"><i class="fa-solid fa-power-off"></i> Sair</a>
+                    </div>
                 </div>
-                <i class="fa-solid fa-chevron-up"></i>
             </div>
         </div>
     </aside>
 
-    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
-    <main class="main-layout">
+    <!-- CONTAINER PRINCIPAL -->
+    <div class="app-container">
         
-        <!-- HEADER (Glassmorphism) -->
-        <header class="glass-header">
-            <div class="header-search">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Buscar em meus estudos...">
-                <kbd>/</kbd>
+        <!-- HEADER GLASSMORPHISM -->
+        <header class="main-header">
+            <div class="header-left">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="ai-search-input" placeholder="IA: Pesquise ou peça ajuda em um tema...">
+                </div>
             </div>
             
-            <div class="header-actions">
-                <div class="notif-badge" onclick="App.toggleNotifDropdown()">
-                    <i class="fa-solid fa-bell"></i>
-                    <span class="dot hidden" id="notif-dot"></span>
+            <div class="header-right">
+                <!-- Dropdown de Notificações -->
+                <div class="notif-wrapper">
+                    <button class="btn-icon-premium" id="notif-trigger" onclick="App.toggleNotifDropdown()">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="notif-dot hidden" id="notif-dot"></span>
+                    </button>
+                    <div class="notif-dropdown card" id="notifDropdown">
+                        <header class="notif-header">
+                            <h4>Notificações 2026</h4>
+                            <button onclick="App.clearNotifs()">Limpar</button>
+                        </header>
+                        <div id="notif-list" class="notif-list">
+                            <p class="empty-notif">Tudo em dia!</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="v-divider"></div>
-                <button class="btn-settings" onclick="App.openProfileModal()">
-                    <i class="fa-solid fa-gear"></i>
-                </button>
+
+                <div class="header-divider"></div>
+
+                <!-- Perfil Header (Dropdown Flutuante) -->
+                <div class="profile-accordion header-version" id="headerProfileAccordion">
+                    <div class="accordion-header" onclick="App.toggleAccordion('headerProfileAccordion')">
+                        <span class="u-greeting">Olá, <strong id="header-user-name">...</strong></span>
+                        <img src="" alt="Avatar" class="user-avatar-sm" id="header-avatar-img">
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="dropdown-content">
+                            <a href="javascript:void(0)" onclick="App.openProfileModal()"><i class="fa-solid fa-id-card"></i> Configurações</a>
+                            <div class="menu-divider"></div>
+                            <a href="javascript:void(0)" class="logout-header-link" onclick="apiService.logout()">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Sair do Sistema
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <!-- VIEWPORT (Onde as abas aparecem) -->
-        <div class="content-viewport">
+        <!-- VIEWPORT (Onde a mágica acontece) -->
+        <main class="main-content">
             
-            <!-- ABA: INÍCIO -->
-            <section id="tab-inicio" class="tab-pane active">
-                <div class="welcome-banner">
-                    <div class="banner-text">
-                        <h1 id="welcome-msg">Bem-vindo, Estudante! 🚀</h1>
-                        <p>Você tem 4 atividades pendentes para hoje. Vamos focar?</p>
-                    </div>
-                    <div class="banner-stats">
-                        <div class="mini-stat">
-                            <span class="stat-value">12</span>
-                            <span class="stat-label">Dias de Foco</span>
+            <!-- 1. ABA: DASHBOARD -->
+            <section id="tab-inicio" class="tab-content active">
+                <div class="hero-premium">
+                    <div class="hero-info">
+                        <h1 id="welcome-msg">Foco Total: Temporada 2026 🎯</h1>
+                        <p>Faltam <strong>85 dias</strong> para o ENEM 2026. Sua média de acertos subiu 15% esta semana.</p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary" onclick="App.showTab('vestibular')">Praticar Simulados</button>
+                            <button class="btn btn-glass" onclick="App.openAiChat()">Resumo IA do Dia</button>
                         </div>
                     </div>
                 </div>
-
-                <div class="dashboard-grid">
-                    <!-- Cards de progresso rápido -->
-                    <div class="glass-card stat-card">
-                        <div class="icon-box blue"><i class="fa-solid fa-clock"></i></div>
-                        <div class="data-box">
-                            <h3>14.5h</h3>
-                            <p>Estudadas esta semana</p>
-                        </div>
+                <div class="stats-grid">
+                    <div class="stat-card card">
+                        <div class="stat-icon blue"><i class="fa-solid fa-bolt"></i></div>
+                        <div><h3>142h</h3><p>Estudadas</p></div>
                     </div>
-                    <div class="glass-card stat-card">
-                        <div class="icon-box green"><i class="fa-solid fa-check-double"></i></div>
-                        <div class="data-box">
-                            <h3>85%</h3>
-                            <p>Taxa de acertos</p>
-                        </div>
+                    <div class="stat-card card">
+                        <div class="stat-icon green"><i class="fa-solid fa-chart-line"></i></div>
+                        <div><h3>88%</h3><p>Precisão</p></div>
                     </div>
-                    <div class="glass-card stat-card">
-                        <div class="icon-box amber"><i class="fa-solid fa-fire"></i></div>
-                        <div class="data-box">
-                            <h3>920</h3>
-                            <p>Pontos acumulados</p>
-                        </div>
+                    <div class="stat-card card">
+                        <div class="stat-icon amber"><i class="fa-solid fa-fire"></i></div>
+                        <div><h3>24</h3><p>Dias de Streak</p></div>
                     </div>
                 </div>
             </section>
 
-            <!-- ABA: DISCIPLINAS -->
-            <section id="tab-disciplinas" class="tab-pane">
-                <header class="section-header">
-                    <h2>Seus Módulos</h2>
-                    <div class="header-filters">
-                        <button class="filter-pill active">Todos</button>
-                        <button class="filter-pill">Exatas</button>
-                        <button class="filter-pill">Humanas</button>
-                    </div>
-                </header>
-                <div class="disciplinas-grid" id="subjects-container">
-                    <!-- Gerado via JS -->
+            <!-- 2. ABA: DISCIPLINAS -->
+            <section id="tab-disciplinas" class="tab-content">
+                <h2 class="section-title">Módulos de Aprendizado</h2>
+                <div class="grid-layout" id="disciplinas-grid">
+                    <!-- Gerado pelo JS -->
                 </div>
             </section>
 
-            <!-- ABA: CRONOGRAMA -->
-            <section id="tab-cronograma" class="tab-pane">
-                <!-- Estrutura do calendário será colocada aqui -->
+            <!-- 3. ABA: VESTIBULAR (SISTEMA DE IA INTEGRADO) -->
+            <section id="tab-vestibular" class="tab-content">
+                <div class="vestibular-header">
+                    <h2 class="section-title">Centro de Vestibulares 2026</h2>
+                    <nav class="sub-tab-nav">
+                        <button class="sub-link active" onclick="App.showSubTab('redacao')">Redação & IA</button>
+                        <button class="sub-link" onclick="App.showSubTab('provas')">Arquivos</button>
+                        <button class="sub-link" onclick="App.showSubTab('simulados')">Simulados</button>
+                    </nav>
+                </div>
+
+                <!-- SUB-ABA: REDAÇÃO -->
+                <div id="sub-redacao" class="sub-content-pane">
+                    <div class="redacao-layout">
+                        <div class="editor-side">
+                            <div class="card editor-card">
+                                <header class="editor-header">
+                                    <h4>Escrita Analítica</h4>
+                                    <button class="btn-ai-action" onclick="App.handleAiEssayAnalysis()">
+                                        <i class="fa-solid fa-robot"></i> Analisar Texto com IA
+                                    </button>
+                                </header>
+                                <textarea id="essay-editor" placeholder="Escreva seu texto aqui. A IA analisará ortografia, coesão e competências do ENEM..."></textarea>
+                                <div class="editor-footer">
+                                    <span id="char-count">0 caracteres</span>
+                                    <button class="btn btn-primary" onclick="notify('Rascunho salvo com sucesso!', 'success')">Salvar Rascunho</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-side">
+                            <h4>Modelos Nota 1000 (2024-2025)</h4>
+                            <div class="essays-gallery">
+                                <div class="essay-item card" onclick="App.viewImage('https://static.todamateria.com.br/upload/re/da/redacao_enem_exemplo.jpg')">
+                                    <img src="https://static.todamateria.com.br/upload/re/da/redacao_enem_exemplo.jpg">
+                                    <span>ENEM 2025</span>
+                                </div>
+                                <div class="essay-item card" onclick="App.viewImage('https://img.quizur.com/f/img5eb6e5eb6046e7.44754593.jpg')">
+                                    <img src="https://img.quizur.com/f/img5eb6e5eb6046e7.44754593.jpg">
+                                    <span>ENEM 2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-ABA: PROVAS -->
+                <div id="sub-provas" class="sub-content-pane hidden">
+                    <div class="vestibulares-grid">
+                        <div class="card exam-card">
+                            <header><i class="fa-solid fa-landmark"></i> <h4>Gabaritos ENEM</h4></header>
+                            <div class="exam-actions">
+                                <a href="#" class="btn-exam">ENEM 2025 (Novo)</a>
+                                <a href="#" class="btn-exam">ENEM 2024</a>
+                                <a href="#" class="btn-exam">ENEM 2023</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-ABA: SIMULADOS -->
+                <div id="sub-simulados" class="sub-content-pane hidden">
+                    <div class="quiz-container-elite card" id="quiz-box">
+                        <!-- Injetado via JS -->
+                    </div>
+                </div>
             </section>
 
-        </div>
-    </main>
+            <!-- 4. ABA: CRONOGRAMA -->
+            <section id="tab-agenda" class="tab-content">
+                <div class="calendar-header-elite">
+                    <h2 class="section-title">Calendário de Estudos 2026</h2>
+                    <div class="calendar-controls">
+                        <button onclick="App.changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="calendar-month-year">...</h3>
+                        <button onclick="App.changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div id="calendar-grid" class="calendar-grid-elite card"></div>
+            </section>
 
-    <!-- MODAIS -->
-    <div id="profileModal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <!-- Conteúdo do Modal de Perfil -->
+            <!-- 5. ABA: ATIVIDADES -->
+            <section id="tab-atividades" class="tab-content">
+                <h2 class="section-title">Suas Metas Diárias</h2>
+                <div class="atividades-grid" id="atividades-list">
+                    <!-- Gerado pelo JS -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER SaaS PREMIUM -->
+        <footer class="main-footer">
+            <div class="footer-left">
+                © 2026 <strong>EstudoTeca Elite</strong>. Versão v10.0 AI-Driven.
+            </div>
+            <div class="footer-right">
+                <a href="#">Privacidade</a>
+                <a href="#">Termos de Uso</a>
+                <a href="#">Suporte Técnico</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL CHAT IA (GEMINI) -->
+    <div class="modal-overlay" id="aiChatModal">
+        <div class="modal-card ai-card">
+            <header class="modal-header-elite">
+                <div class="ai-header-title">
+                    <i class="fa-solid fa-robot"></i>
+                    <div>
+                        <h3>Assistente EstudoTeca</h3>
+                        <small>Powered by Gemini 2026</small>
+                    </div>
+                </div>
+                <i class="fa-solid fa-xmark close-modal" onclick="App.closeAiChat()"></i>
+            </header>
+            <div class="ai-chat-body" id="ai-chat-content">
+                <div class="ai-msg bot">Olá! Sou seu tutor inteligente. Como posso ajudar você nos seus estudos para 2026 hoje?</div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="ai-user-input" placeholder="Digite sua dúvida aqui...">
+                <button onclick="App.handleAiChatSubmit()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- MODAL DE CONFIGURAÇÕES -->
+    <div class="modal-overlay" id="configModal">
+        <div class="modal-card">
+            <header class="modal-header-elite">
+                <h3>Ajustes da Conta</h3>
+                <i class="fa-solid fa-xmark close-modal" onclick="App.closeConfigModal()"></i>
+            </header>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nome de Exibição</label>
+                    <input type="text" id="edit-name" class="input-field-elite">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="App.handleProfileUpdate()">Salvar Alterações</button>
+                <div class="danger-zone-elite">
+                    <p>Ao excluir sua conta, todos os seus dados e progressos serão removidos de 2026.</p>
+                    <button class="btn-text-danger" onclick="App.handleAccountDelete()">Excluir Permanentemente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO DE IMAGEM -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-card image-viewer">
+            <i class="fa-solid fa-xmark close-modal" onclick="App.closeImageModal()"></i>
+            <img src="" id="modal-img-display">
+        </div>
+    </div>
+
+    <!-- Scripts de Inteligência -->
     <script src="js/services.js"></script>
     <script src="js/dashboard.js"></script>
 </body>

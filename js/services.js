@@ -1,12 +1,12 @@
 /* ============================================================
-   js/services.js - Central de Integração SaaS (v3.3)
+   js/services.js - Central de Integração SaaS Elite (v9.0 AI)
    ============================================================ */
 
 const API_URL = "http://localhost:3000/api";
 
 /**
  * 1. SISTEMA GLOBAL DE NOTIFICAÇÕES (TOASTS)
- * Alertas elegantes que aparecem no canto da tela (Sucesso, Erro, Info)
+ * Alertas elegantes no estilo SaaS (Success / Error / Info)
  */
 function notify(message, type = 'success') {
     const container = document.getElementById('toast-container');
@@ -28,7 +28,6 @@ function notify(message, type = 'success') {
 
     container.appendChild(toast);
 
-    // Auto-destruição elegante
     setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(50px)';
@@ -39,10 +38,32 @@ function notify(message, type = 'success') {
 
 /**
  * 2. CORE DA API (apiService)
- * Gerencia toda a comunicação com o servidor v3.3
+ * Centraliza todas as chamadas ao servidor Node.js
  */
 const apiService = {
     
+    // --- INTELIGÊNCIA ARTIFICIAL (GEMINI) ---
+    async askAI(prompt) {
+        try {
+            const response = await fetch(`${API_URL}/ai/chat`, {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({ prompt })
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "A IA falhou em responder.");
+
+            return data.response;
+        } catch (error) {
+            console.error("AI Service Error:", error);
+            throw error;
+        }
+    },
+
     // --- AUTENTICAÇÃO ---
     async login(email, password) {
         const response = await fetch(`${API_URL}/auth/login`, {
@@ -83,7 +104,7 @@ const apiService = {
             body: JSON.stringify({ name: newName })
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Erro ao atualizar.");
+        if (!response.ok) throw new Error(data.error || "Erro ao atualizar perfil.");
         localStorage.setItem('user_name', data.name);
         return data;
     },
@@ -97,20 +118,16 @@ const apiService = {
         return true;
     },
 
-    // --- AGENDA / CALENDÁRIO (CRUD) ---
-
-    // Buscar todos os eventos (GET)
+    // --- AGENDA / CRONOGRAMA ---
     async getEvents() {
         const response = await fetch(`${API_URL}/events`, {
             method: "GET",
             headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
         });
         const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Erro ao buscar agenda.");
         return data;
     },
 
-    // Criar novo evento (POST)
     async createEvent(eventData) {
         const response = await fetch(`${API_URL}/events`, {
             method: "POST",
@@ -120,20 +137,15 @@ const apiService = {
             },
             body: JSON.stringify(eventData)
         });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Erro ao salvar.");
-        return data;
+        return await response.json();
     },
 
-    // Deletar evento (DELETE) - NOVA FUNÇÃO v3.3
     async deleteEvent(eventId) {
         const response = await fetch(`${API_URL}/events/${eventId}`, {
             method: "DELETE",
             headers: { "Authorization": `Bearer ${localStorage.getItem('token')}` }
         });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Erro ao excluir compromisso.");
-        return data;
+        return await response.json();
     },
 
     // --- UTILITÁRIOS DE SESSÃO ---
